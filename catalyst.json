@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "targets": [
+      "todo_list_function"
+    ],
+    "ignore": [],
+    "source": "functions"
+  },
+  "client": {
+    "source": "todolist",
+    "plugin": "zcatalyst-cli-plugin-react"
+  }
+}
