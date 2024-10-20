@@ -6,9 +6,14 @@ import SearchBar from './components/SearchBar';
 import FilterButtons from './components/FilterButtons';
 import { Task } from './types';
 import './App.css';
+declare global {
 
-const API_BASE_URL = "https://todolist-60033657749.development.catalystserverless.in/server/todo_list_function";
-// console.log(process.env.REACT_APP_API_BASE_URL);
+  interface Window {
+    catalyst: any;
+  }
+}
+
+const API_BASE_URL = "/server/todo_list_function";
 
 export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -18,6 +23,8 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  
+
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -26,7 +33,13 @@ export default function App() {
     try {
         setIsLoading(true);
         setError(null);
-        const response = await axios.get(`${API_BASE_URL}/tasks`);
+        const response = await axios.get(`${API_BASE_URL}/tasks`, 
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          } 
+        );
         console.log("Fetched tasks:", response.data.tasks);
         if (Array.isArray(response.data.tasks)) {
             setTasks(response.data.tasks);
@@ -56,7 +69,7 @@ export default function App() {
   const updateTask = async (id: number, updatedTask: Partial<Task>) => {
     try {
       setError(null);
-      const response = await axios.put(`${API_BASE_URL}/tasks/${id}`, updatedTask);
+      const response = await axios.put(`${API_BASE_URL}/tasks`, { id, ...updatedTask });
       setTasks(tasks.map(task => task.id === id ? response.data : task));
       setEditingTask(null);
     } catch (error) {
@@ -68,7 +81,7 @@ export default function App() {
   const deleteTask = async (id: number) => {
     try {
       setError(null);
-      await axios.delete(`${API_BASE_URL}/tasks/${id}`);
+      await axios.delete(`${API_BASE_URL}/tasks`, { data: { id } });
       setTasks(tasks.filter(task => task.id !== id));
     } catch (error) {
       console.error('Error deleting task:', error);
@@ -93,7 +106,7 @@ export default function App() {
   return (
     <div className="app-container">
       {isLoading && <div className="loader">Loading...</div>}
-      <h1 className="app-title">Task Manager</h1>
+        <h1 className='app-title'>Task Manager</h1>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <FilterButtons filter={filter} setFilter={setFilter} />
       <TaskForm task={editingTask} onSubmit={(task) => editingTask ? updateTask(editingTask.id, task) : addTask(task)} />
