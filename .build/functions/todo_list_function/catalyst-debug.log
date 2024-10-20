@@ -1,0 +1,36 @@
+[debug] [2024-10-18T18:10:29.973Z] : 
+[debug] [2024-10-18T18:10:29.975Z] : ----------------------------------------------------------------------
+[debug] [2024-10-18T18:10:29.975Z] : Command:      C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\zcatalyst-cli\lib\bin\catalyst.js serve
+[debug] [2024-10-18T18:10:29.976Z] : CLI Version:  1.17.6
+[debug] [2024-10-18T18:10:29.976Z] : Platform:     win32
+[debug] [2024-10-18T18:10:29.976Z] : Node Version: v20.17.0
+[debug] [2024-10-18T18:10:29.977Z] : Time:         Fri Oct 18 2024 23:40:29 GMT+0530 (India Standard Time)
+[debug] [2024-10-18T18:10:29.977Z] : ----------------------------------------------------------------------
+[debug] [2024-10-18T18:10:29.977Z] : 
+[debug] [2024-10-18T18:10:37.299Z] : > authorizing via signed-in user option
+[debug] [2024-10-18T18:10:37.300Z] : > command requires scopes: ["ZohoCatalyst.projects.ALL","ZohoCatalyst.functions.ALL","ZohoCatalyst.functions.EXECUTE","ZohoCatalyst.webapp.ALL","ZohoCatalyst.pdfshot.execute","ZohoCatalyst.authentication.CREATE"]
+[debug] [2024-10-18T18:10:37.376Z] : > refreshing access token <
+[debug] [2024-10-18T18:10:37.378Z] : >>>> HTTP REQUEST : POST https://accounts.zoho.in/oauth/v2/token 
+<request body omitted>
+
+[debug] [2024-10-18T18:10:37.563Z] : <<<< HTTP RESPONSE : 200
+Response Headers: {"server":"ZGS","date":"Fri, 18 Oct 2024 18:10:37 GMT","content-type":"application/json;charset=UTF-8","content-length":"1948","connection":"keep-alive","set-cookie":["zalb_6e73717622=cc36c6f8a6790832246efd66c032e512; Path=/; Secure; HttpOnly","iamcsr=c82294ad-076c-42c8-917f-922f76e648eb;path=/;SameSite=None;Secure;priority=high","_zcsr_tmp=c82294ad-076c-42c8-917f-922f76e648eb;path=/;SameSite=Strict;Secure;priority=high"],"cache-control":"no-store","x-content-type-options":"nosniff","content-security-policy":"script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.zohocdn.com https://*.zoho.com https://*.zoho.eu https://*.zoho.com.cn https://*.zoho.com.au https://*.zoho.jp https://*.zoho.uk https://*.zoho.sa https://*.zohocloud.ca; report-uri https://logsapi.zoho.in/csplog?service=accounts;","pragma":"no-cache","x-frame-options":"SAMEORIGIN","vary":"accept-encoding","content-language":"en-US","strict-transport-security":"max-age=63072000"}
+
+[debug] [2024-10-18T18:10:37.583Z] : >>>> HTTP REQUEST : GET https://api.catalyst.zoho.in/baas/v1/project/10384000000007078 
+
+[debug] [2024-10-18T18:10:37.663Z] : <<<< HTTP RESPONSE : 200
+Response Headers: {"server":"ZGS","date":"Fri, 18 Oct 2024 18:10:37 GMT","content-type":"application/vnd.catalyst.v2+json","transfer-encoding":"chunked","connection":"keep-alive","set-cookie":["zalb_3a750b85f1=7c58023b2365c117e2ff9b6feb09efa2; Path=/; Secure; HttpOnly","ZD_CSRF_TOKEN=81b04128-7c86-4d96-afb3-9c483a83391f;path=/;SameSite=None;Secure;priority=high","_zcsr_tmp=81b04128-7c86-4d96-afb3-9c483a83391f;path=/;SameSite=Strict;Secure;priority=high"],"x-content-type-options":"nosniff","x-xss-protection":"1","cache-control":"private,no-cache,no-store,max-age=0,must-revalidate","pragma":"no-cache","expires":"Thu, 01 Jan 1970 00:00:00 GMT","x-frame-options":"DENY","strict-transport-security":"max-age=63072000"}
+
+[debug] [2024-10-18T18:10:37.665Z] : >>>> HTTP REQUEST : GET https://api.catalyst.zoho.in/baas/v1/project/10384000000007078/environment 
+
+[debug] [2024-10-18T18:10:37.732Z] : <<<< HTTP RESPONSE : 200
+Response Headers: {"server":"ZGS","date":"Fri, 18 Oct 2024 18:10:38 GMT","content-type":"application/vnd.catalyst.v2+json","transfer-encoding":"chunked","connection":"keep-alive","set-cookie":["zalb_3a750b85f1=99131cfabfda186b4fe68a16fb8fedd6; Path=/; Secure; HttpOnly","ZD_CSRF_TOKEN=4bde33d2-5deb-4a3b-9a03-b228237d5eda;path=/;SameSite=None;Secure;priority=high","_zcsr_tmp=4bde33d2-5deb-4a3b-9a03-b228237d5eda;path=/;SameSite=Strict;Secure;priority=high"],"x-content-type-options":"nosniff","x-xss-protection":"1","cache-control":"private,no-cache,no-store,max-age=0,must-revalidate","pragma":"no-cache","expires":"Thu, 01 Jan 1970 00:00:00 GMT","x-frame-options":"DENY","strict-transport-security":"max-age=63072000"}
+
+[debug] [2024-10-18T18:10:39.083Z] : http port : '3000' is not available. Hence port '3001' will be used instead.
+[debug] [2024-10-18T18:10:39.110Z] : >>>> HTTP REQUEST : GET https://api.catalyst.zoho.in/baas/v1/project/10384000000007078/function 
+Query params: {"type":"basicio,event,cron,applogic,integration,browser_logic"}
+
+[debug] [2024-10-18T18:10:39.130Z] : <<<< HTTP RESPONSE : 200
+Response Headers: {"server":"ZGS","date":"Fri, 18 Oct 2024 18:10:39 GMT","content-type":"application/vnd.catalyst.v2+json","transfer-encoding":"chunked","connection":"keep-alive","set-cookie":["zalb_3a750b85f1=7c58023b2365c117e2ff9b6feb09efa2; Path=/; Secure; HttpOnly","ZD_CSRF_TOKEN=80daadd4-9298-4fb5-8d3b-cbf994b18761;path=/;SameSite=None;Secure;priority=high","_zcsr_tmp=80daadd4-9298-4fb5-8d3b-cbf994b18761;path=/;SameSite=Strict;Secure;priority=high"],"x-content-type-options":"nosniff","x-xss-protection":"1","cache-control":"private,no-cache,no-store,max-age=0,must-revalidate","pragma":"no-cache","expires":"Thu, 01 Jan 1970 00:00:00 GMT","x-frame-options":"DENY","strict-transport-security":"max-age=63072000"}
+
+[debug] [2024-10-18T18:10:39.133Z] : unknown eol undefined hence skipping check
