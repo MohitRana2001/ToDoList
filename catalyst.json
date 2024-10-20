@@ -7,7 +7,7 @@
     "source": "functions"
   },
   "client": {
-    "source": "todolist",
+    "source": "todoist",
     "plugin": "zcatalyst-cli-plugin-react"
   }
 }
