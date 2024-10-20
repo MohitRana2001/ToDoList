@@ -28,7 +28,7 @@ export default function TaskForm({ task, onSubmit }: TaskFormProps) {
       setError('Title is required');
       return;
     }
-    onSubmit({ title, description, completed: false });
+    onSubmit({ title, description, status: 'pending', completed: false });
     setTitle('');
     setDescription('');
     setError('');

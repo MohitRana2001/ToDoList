@@ -89,6 +89,15 @@ export default function App() {
     }
   };
 
+  const toggleTaskComplete = async (id: number, completed: boolean) => {
+    try {
+      await updateTask(id, { completed });
+    } catch (error) {
+      console.error('Error toggling task completion:', error);
+      setError('Failed to update task completion. Please try again.');
+    }
+  };
+
   if(isLoading) return <div className="loader">Loading...</div>;
 
   const filteredTasks = Array.isArray(tasks)
@@ -114,7 +123,7 @@ export default function App() {
         tasks={filteredTasks}
         onEdit={setEditingTask}
         onDelete={deleteTask}
-        onToggleComplete={(id, completed) => updateTask(id, { completed })}
+        onToggleComplete={toggleTaskComplete}
       />
     </div>
   );
