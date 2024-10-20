@@ -17,6 +17,10 @@ async function getTasksTable(catalystApp) {
   return table;
 }
 
+app.get('/ping', (req,res) => {
+	res.status(200).json({message: "pong"});
+});
+
 app.get('/tasks', async (req, res) => {
 	const catalystApp = initializeCatalyst(req);
   
@@ -33,16 +37,16 @@ app.get('/tasks', async (req, res) => {
 		const pageResult = await table.getPagedRows({
 		  maxRows: pageSize,
 		  nextToken: nextToken
-		});	
+		});
 
-		// console.log(pageResult.data);
+		console.log(pageResult.data);	
   
 		allTasks = allTasks.concat(pageResult.data);
 		hasNext = pageResult.more_records;
 		nextToken = pageResult.next_token;
 	  }
 
-	//   console.log(allTasks);
+	  console.log(allTasks);
   
 	  const tasks = allTasks.map(row => ({
 		id: row.ROWID,
@@ -114,54 +118,71 @@ app.get('/tasks/:id', async (req, res) => {
 	}
 });
 
-app.put('/tasks/:id', async (req, res) => {
-	const catalystApp = initializeCatalyst(req);
-	const taskId = req.params.id;
-	const { title, description, status } = req.body;
-  
-	if (!title) {
-	  return res.status(400).json({ error: 'Title is required' });
-	}
-  
-	try {
-	  const table = await getTasksTable(catalystApp);
-	  await table.updateRow({
-		ROWID: taskId,
+app.put('/tasks', async (req, res) => {
+  const catalystApp = initializeCatalyst(req);
+  const { id, title, description, status, completed } = req.body;
+  const table = await getTasksTable(catalystApp);
+  const task = await table.getRow(id);
+  const { status: taskStatus } = task;
+
+  if (!id || !title) {
+    return res.status(400).json({ error: 'ID and title are required' });
+  }
+
+  if(completed && taskStatus === 'completed'){
+	return res.status(400).json({ error: 'Task is already completed' });
+  }
+
+	const updatedTask = {
+		id,
 		title,
 		description: description || '',
-		status: status || 'pending'
-	  });
-  
-	  const updatedTask = {
-		id: taskId,
-		title,
-		description: description || '',
-		status: status || 'pending'
-	  };
-  
-	  res.status(200).json(updatedTask);
-	} catch (error) {
-	  console.error('Error updating task:', error);
-	  res.status(500).json({ error: 'Internal server error' });
-	}
+		status: status || 'pending',
+		completed: completed
+	};
+
+  try {
+    await table.updateRow({
+      ROWID: id,
+      title,
+      description: description || '',
+      status: completed ? 'completed' : status || 'pending'
+    });
+
+    const updatedTask = {
+      id,
+      title,
+      description: description || '',
+      status: completed ? 'completed' : status || 'pending'
+    };
+
+    res.status(200).json(updatedTask);
+  } catch (error) {
+    console.error('Error updating task:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
-  
-app.delete('/tasks/:id', async (req, res) => {
-	const catalystApp = initializeCatalyst(req);
-	const taskId = req.params.id;
-  
-	try {
-	  const table = await getTasksTable(catalystApp);
-  
-	  // Delete the task with the given ID
-	  await table.deleteRow(taskId); 
-  
-	  res.status(204).send(); // 204 No Content for successful deletion
-	} catch (error) {
-	  console.error('Error deleting task:', error);
-	  res.status(500).json({ error: 'Internal server error' });
-	}
-  });
+
+app.delete('/tasks', async (req, res) => {
+  const catalystApp = initializeCatalyst(req);
+  const { id } = req.body;
+
+  if (!id) {
+    return res.status(400).json({ error: 'ID is required' });
+  }
+
+  try {
+    const table = await getTasksTable(catalystApp);
+
+    // Delete the task with the given ID
+    await table.deleteRow(id);
+
+    res.status(204).send(); // 204 No Content for successful deletion
+  } catch (error) {
+    console.error('Error deleting task:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 // Start the server
 const port = process.env.PORT || 3000;
