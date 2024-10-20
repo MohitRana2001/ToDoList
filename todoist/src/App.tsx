@@ -45,9 +45,11 @@ export default function App() {
             setTasks(response.data.tasks);
         } else {
             setError('Invalid data format received from server.');
+            console.log(error);
         }
     } catch (error) {
         console.error('Error fetching tasks:', error);
+        
         setError('Failed to fetch tasks. Please try again later.');
     } finally {
         setIsLoading(false);
@@ -70,7 +72,7 @@ export default function App() {
     try {
       setError(null);
       const response = await axios.put(`${API_BASE_URL}/tasks`, { id, ...updatedTask });
-      setTasks(tasks.map(task => task.id === id ? response.data : task));
+      setTasks(tasks.map(task => task.id === id ? { ...task, ...response.data } : task));
       setEditingTask(null);
     } catch (error) {
       console.error('Error updating task:', error);
@@ -91,7 +93,7 @@ export default function App() {
 
   const toggleTaskComplete = async (id: number, completed: boolean) => {
     try {
-      await updateTask(id, { completed });
+      await updateTask(id, { completed: !completed });
     } catch (error) {
       console.error('Error toggling task completion:', error);
       setError('Failed to update task completion. Please try again.');
